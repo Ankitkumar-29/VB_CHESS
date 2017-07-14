@@ -1,0 +1,9 @@
+C:\Users\ANKIT\documents\visual studio 2010\Projects\Chess\Chess\obj\x86\Debug\Chess.Resources.resources
+C:\Users\ANKIT\documents\visual studio 2010\Projects\Chess\Chess\obj\x86\Debug\Chess.vbproj.GenerateResource.Cache
+C:\Users\ANKIT\documents\visual studio 2010\Projects\Chess\Chess\bin\Debug\Chess.exe
+C:\Users\ANKIT\documents\visual studio 2010\Projects\Chess\Chess\bin\Debug\Chess.pdb
+C:\Users\ANKIT\documents\visual studio 2010\Projects\Chess\Chess\bin\Debug\Chess.xml
+C:\Users\ANKIT\documents\visual studio 2010\Projects\Chess\Chess\obj\x86\Debug\Chess.Form1.resources
+C:\Users\ANKIT\documents\visual studio 2010\Projects\Chess\Chess\obj\x86\Debug\Chess.exe
+C:\Users\ANKIT\documents\visual studio 2010\Projects\Chess\Chess\obj\x86\Debug\Chess.xml
+C:\Users\ANKIT\documents\visual studio 2010\Projects\Chess\Chess\obj\x86\Debug\Chess.pdb
