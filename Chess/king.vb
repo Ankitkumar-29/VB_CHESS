@@ -1,7 +1,7 @@
 ﻿Public Class king
     Public x_pos, y_pos As Integer
     Public piece_val As Integer
-    Private flags(7, 7) As Boolean
+    Public flags(7, 7) As Boolean
     Public check_the_king(7, 7) As Boolean
 
     Public Sub New(ByVal x, ByVal y, ByVal p_val)   'color=+ve val if white color=-ve if black  
@@ -32,14 +32,91 @@
         Return flags
     End Function
     Public Sub white_mov()
+        If x_pos + 1 <= 7 Then
+            If Chess.Form1.ga.board(x_pos + 1, y_pos) <= 0 And Form1.ga.check_for_white(x_pos + 1, y_pos) <> True Then
+                flags(x_pos + 1, y_pos) = True
+            End If
+        End If
+        If y_pos + 1 <= 7 And x_pos + 1 <= 7 Then
+            If Chess.Form1.ga.board(x_pos + 1, y_pos + 1) <= 0 And Form1.ga.check_for_white(x_pos + 1, y_pos + 1) <> True Then
+                flags(x_pos + 1, y_pos + 1) = True
+            End If
+        End If
 
+        If y_pos - 1 >= 0 And x_pos + 1 <= 7 Then
+            If Chess.Form1.ga.board(x_pos + 1, y_pos - 1) <= 0 And Form1.ga.check_for_white(x_pos + 1, y_pos - 1) <> True Then
+                flags(x_pos + 1, y_pos - 1) = True
+            End If
+        End If
+        If x_pos - 1 >= 0 Then
+            If Chess.Form1.ga.board(x_pos - 1, y_pos) <= 0 And Form1.ga.check_for_white(x_pos - 1, y_pos) <> True Then
+                flags(x_pos - 1, y_pos) = True
+            End If
+        End If
+        If y_pos + 1 <= 7 And x_pos - 1 >= 0 Then
+            If Chess.Form1.ga.board(x_pos - 1, y_pos + 1) <= 0 And Form1.ga.check_for_white(x_pos - 1, y_pos + 1) <> True Then
+                flags(x_pos - 1, y_pos + 1) = True
+            End If
+        End If
+        If y_pos - 1 >= 0 And x_pos - 1 >= 0 Then
+            If Chess.Form1.ga.board(x_pos - 1, y_pos - 1) <= 0 And Form1.ga.check_for_white(x_pos - 1, y_pos - 1) <> True Then
+                flags(x_pos - 1, y_pos - 1) = True
+            End If
+        End If
+
+        If y_pos + 1 <= 7 Then
+            If Chess.Form1.ga.board(x_pos, y_pos + 1) <= 0 And Form1.ga.check_for_white(x_pos, y_pos + 1) <> True Then
+                flags(x_pos, y_pos + 1) = True
+            End If
+        End If
+        If y_pos - 1 >= 0 Then
+            If Chess.Form1.ga.board(x_pos, y_pos - 1) <= 0 And Form1.ga.check_for_white(x_pos, y_pos - 1) <> True Then
+                flags(x_pos, y_pos - 1) = True
+            End If
+        End If
     End Sub
     Public Sub black_mov()
-        If x_pos + 1 <= 7 And Chess.Form1.ga.board(x_pos + 1, y_pos) <= 0 And Form1.ga.check_for_black(x_pos + 1, y_pos) <> True Then
-            flags(x_pos + 1, y_pos) = True
+        If x_pos + 1 <= 7 Then
+            If Chess.Form1.ga.board(x_pos + 1, y_pos) >= 0 And Form1.ga.check_for_black(x_pos + 1, y_pos) <> True Then
+                flags(x_pos + 1, y_pos) = True
+            End If
         End If
-        If x_pos - 1 >= 0 And Chess.Form1.ga.board(x_pos - 1, y_pos) <= 0 And Form1.ga.check_for_black(x_pos - 1, y_pos) <> True Then
-            flags(x_pos - 1, y_pos) = True
+        If y_pos + 1 <= 7 And x_pos + 1 <= 7 Then
+            If Chess.Form1.ga.board(x_pos + 1, y_pos + 1) >= 0 And Form1.ga.check_for_black(x_pos + 1, y_pos + 1) <> True Then
+                flags(x_pos + 1, y_pos + 1) = True
+            End If
+        End If
+
+        If y_pos - 1 >= 0 And x_pos + 1 <= 7 Then
+            If Chess.Form1.ga.board(x_pos + 1, y_pos - 1) >= 0 And Form1.ga.check_for_black(x_pos + 1, y_pos - 1) <> True Then
+                flags(x_pos + 1, y_pos - 1) = True
+            End If
+        End If
+        If x_pos - 1 >= 0 Then
+            If Chess.Form1.ga.board(x_pos - 1, y_pos) >= 0 And Form1.ga.check_for_black(x_pos - 1, y_pos) <> True Then
+                flags(x_pos - 1, y_pos) = True
+            End If
+        End If
+        If y_pos + 1 <= 7 And x_pos - 1 >= 0 Then
+            If Chess.Form1.ga.board(x_pos - 1, y_pos + 1) >= 0 And Form1.ga.check_for_black(x_pos - 1, y_pos + 1) <> True Then
+                flags(x_pos - 1, y_pos + 1) = True
+            End If
+        End If
+        If y_pos - 1 >= 0 And x_pos - 1 >= 0 Then
+            If Chess.Form1.ga.board(x_pos - 1, y_pos - 1) >= 0 And Form1.ga.check_for_black(x_pos - 1, y_pos - 1) <> True Then
+                flags(x_pos - 1, y_pos - 1) = True
+            End If
+        End If
+     
+        If y_pos + 1 <= 7 Then
+            If Chess.Form1.ga.board(x_pos, y_pos + 1) >= 0 And Form1.ga.check_for_black(x_pos, y_pos + 1) <> True Then
+                flags(x_pos, y_pos + 1) = True
+            End If
+        End If
+        If y_pos - 1 >= 0 Then
+            If Chess.Form1.ga.board(x_pos, y_pos - 1) >= 0 And Form1.ga.check_for_black(x_pos, y_pos - 1) <> True Then
+                flags(x_pos, y_pos - 1) = True
+            End If
         End If
     End Sub
     Public Sub re_flags()

@@ -3,6 +3,7 @@
     Public piece_val As Integer
     Private flags(7, 7) As Boolean
     Public check_the_king(7, 7) As Boolean
+    Private pin As Boolean = False
 
     Public Sub New(ByVal x, ByVal y, ByVal p_val)   'color=+ve val if white color=-ve if black  
         x_pos = x
@@ -34,10 +35,10 @@
     End Function
     Public Sub white_mov()
         If x_pos = 1 Then
-            If Chess.Form1.ga.board(x_pos + 1, y_pos) = 0 And x_pos < 7 Then
+            If Chess.Form1.ga.board(x_pos + 1, y_pos) = 0 And x_pos < 7 And pin = False Then
                 flags(x_pos + 1, y_pos) = True
             End If
-            If Chess.Form1.ga.board(x_pos + 2, y_pos) = 0 And Chess.Form1.ga.board(x_pos + 1, y_pos) = 0 Then
+            If Chess.Form1.ga.board(x_pos + 2, y_pos) = 0 And Chess.Form1.ga.board(x_pos + 1, y_pos) = 0 And pin = False Then
                 flags(x_pos + 2, y_pos) = True
             End If
             If y_pos + 1 <= 7 And x_pos + 1 <= 7 Then
@@ -52,7 +53,7 @@
             End If
         Else
             If x_pos + 1 <= 7 Then
-                If Chess.Form1.ga.board(x_pos + 1, y_pos) = 0 Then
+                If Chess.Form1.ga.board(x_pos + 1, y_pos) = 0 And pin = False Then
                     flags(x_pos + 1, y_pos) = True
                 End If
             End If
@@ -61,20 +62,22 @@
                     flags(x_pos + 1, y_pos + 1) = True
                 End If
             End If
+
             If y_pos - 1 >= 0 And x_pos + 1 <= 7 Then
                 If Chess.Form1.ga.board(x_pos + 1, y_pos - 1) < 0 Then
                     flags(x_pos + 1, y_pos - 1) = True
                 End If
             End If
-            End If
+        End If
+        pin = False
 
     End Sub
     Public Sub black_mov()
         If x_pos = 6 Then
-            If Chess.Form1.ga.board(x_pos - 1, y_pos) = 0 And x_pos > 0 Then
+            If Chess.Form1.ga.board(x_pos - 1, y_pos) = 0 And x_pos > 0 And pin = False Then
                 flags(x_pos - 1, y_pos) = True
             End If
-            If Chess.Form1.ga.board(x_pos - 2, y_pos) = 0 And Chess.Form1.ga.board(x_pos - 1, y_pos) = 0 Then
+            If Chess.Form1.ga.board(x_pos - 2, y_pos) = 0 And Chess.Form1.ga.board(x_pos - 1, y_pos) = 0 And pin = False Then
                 flags(x_pos - 2, y_pos) = True
             End If
             If y_pos + 1 <= 7 And x_pos - 1 >= 0 Then
@@ -89,7 +92,7 @@
             End If
         Else
             If x_pos - 1 >= 0 Then
-                If Chess.Form1.ga.board(x_pos - 1, y_pos) = 0 Then
+                If Chess.Form1.ga.board(x_pos - 1, y_pos) = 0 And pin = False Then
                     flags(x_pos - 1, y_pos) = True
                 End If
             End If
@@ -104,6 +107,7 @@
                 End If
             End If
         End If
+        pin = False
     End Sub
     Public Sub re_flags()
         For i As Integer = 0 To 7
@@ -120,6 +124,7 @@
         Next
     End Sub
     Public Sub fill_chk_king()
+        pin = True
         poss_mov()
         For i As Integer = 0 To 7
             For j As Integer = 0 To 7

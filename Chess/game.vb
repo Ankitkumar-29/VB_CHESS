@@ -5,8 +5,10 @@ Public Class game
     Public can_move(7, 7) As Boolean
     Public check_for_white(7, 7) As Boolean
     Public check_for_black(7, 7) As Boolean
-
-
+    Public game_flag As Boolean = True
+    Public player As Integer = 1
+    Public b_in_danger As Boolean = False
+    Public w_in_danger As Boolean = False
     Public Sub New()
         board = {{5, 4, 3, 2, 1, 3, 4, 5},
                  {6, 6, 6, 6, 6, 6, 6, 6},
@@ -16,8 +18,52 @@ Public Class game
                  {0, 0, 0, 0, 0, 0, 0, 0},
                  {-6, -6, -6, -6, -6, -6, -6, -6},
                  {-5, -4, -3, -2, -1, -3, -4, -5}}
+        re_chk_black()
+        re_chk_white()
+
    
     End Sub
+    Public Sub chk_winner(ByVal selected, ByVal x, ByVal y)
+        show()
+        'If b_in_danger = True Then
+        '    game_flag = False
+        '    Form1.b_king.poss_mov()
+        '    For i As Integer = 0 To 7
+        '        For j As Integer = 0 To 7
+        '            If Form1.b_king.flags(i, j) = True Then
+        '                game_flag = True
+        '            End If
+        '        Next
+        '    Next
+        'End If
+        If Form1.b_king.x_pos = x And Form1.b_king.y_pos = y And selected <> "b_king" Then
+            game_flag = False
+        End If
+        If game_flag = False Then
+            MsgBox("PLAYER 1 WiN")
+            Exit Sub
+        End If
+
+        'If w_in_danger = True Then
+        '    game_flag = False
+        '    Form1.w_king.poss_mov()
+        '    For i As Integer = 0 To 7
+        '        For j As Integer = 0 To 7
+        '            If Form1.w_king.flags(i, j) = True Then
+        '                game_flag = True
+        '            End If
+        '        Next
+        '    Next
+        'End If
+        If Form1.w_king.x_pos = x And Form1.w_king.y_pos = y And selected <> "w_king" Then
+            game_flag = False
+        End If
+        If game_flag = False Then
+            MsgBox("PLAYER 2 WiN")
+            Exit Sub
+        End If
+    End Sub
+
     'this is to show images of pieces
     Public Sub show()
 
@@ -49,92 +95,118 @@ Public Class game
                         Form1.pb(i, j).Image = My.Resources.bRook
                     Case -6
                         Form1.pb(i, j).Image = My.Resources.bPawn
-                      
+
                     Case Else
                         Form1.pb(i, j).Image = Nothing
 
                 End Select
-
+                show_chk()
             Next
         Next
     End Sub
     'this is to select pic box
     Public Function selection(ByVal x, ByVal y) As String
-        If board(x, y) <> 0 Then
-            Form1.pb(x, y).BackgroundImage = My.Resources.selection
+        If game_flag = True Then
+            If board(x, y) <> 0 Then
+                Form1.pb(x, y).BackgroundImage = My.Resources.selection
+            End If
+            Select Case board(x, y)
+                Case 1
+                    If player = 1 Then
+                        show_possible_move(Form1.w_king.poss_mov())
+                        Return "w_king"
+                    End If
+                Case 2
+                    If player = 1 Then
+                        show_possible_move(Form1.w_queen.poss_mov())
+                        Return "w_queen"
+                    End If
+                Case 3
+                    If player = 1 Then
+                        For i As Integer = 0 To 1
+                            If Form1.w_bishop(i).ret_x = x And Form1.w_bishop(i).ret_y = y Then
+                                show_possible_move(Form1.w_bishop(i).poss_mov())
+                            End If
+                        Next
+                        Return "w_bishop"
+                    End If
+                Case 4
+                    If player = 1 Then
+                        For i As Integer = 0 To 1
+                            If Form1.w_knight(i).ret_x = x And Form1.w_knight(i).ret_y = y Then
+                                show_possible_move(Form1.w_knight(i).poss_mov())
+                            End If
+                        Next
+                        Return "w_knight"
+                    End If
+                Case 5
+                    If player = 1 Then
+                        For i As Integer = 0 To 1
+                            If Form1.w_rook(i).ret_x = x And Form1.w_rook(i).ret_y = y Then
+                                show_possible_move(Form1.w_rook(i).poss_mov())
+                            End If
+                        Next
+                        Return "w_rook"
+                    End If
+                Case 6
+                    If player = 1 Then
+                        For i As Integer = 0 To 7
+                            If Form1.w_pawn(i).ret_x = x And Form1.w_pawn(i).ret_y = y Then
+                                show_possible_move(Form1.w_pawn(i).poss_mov())
+                            End If
+                        Next
+                        Return "w_pawn"
+                    End If
+                Case -1
+                    If player = 2 Then
+                        show_possible_move(Form1.b_king.poss_mov())
+                        Return "b_king"
+                    End If
+                Case -2
+                    If player = 2 Then
+                        show_possible_move(Form1.b_queen.poss_mov())
+                        Return "b_queen"
+                    End If
+                Case -3
+                    If player = 2 Then
+                        For i As Integer = 0 To 1
+                            If Form1.b_bishop(i).ret_x = x And Form1.b_bishop(i).ret_y = y Then
+                                show_possible_move(Form1.b_bishop(i).poss_mov())
+                            End If
+                        Next
+                        Return "b_bishop"
+                    End If
+                Case -4
+                    If player = 2 Then
+                        For i As Integer = 0 To 1
+                            If Form1.b_knight(i).ret_x = x And Form1.b_knight(i).ret_y = y Then
+                                show_possible_move(Form1.b_knight(i).poss_mov())
+                            End If
+                        Next
+                        Return "b_knight"
+                    End If
+                Case -5
+                    If player = 2 Then
+                        For i As Integer = 0 To 1
+                            If Form1.b_rook(i).ret_x = x And Form1.b_rook(i).ret_y = y Then
+                                show_possible_move(Form1.b_rook(i).poss_mov())
+                            End If
+                        Next
+                        Return "b_rook"
+                    End If
+                Case -6
+                    If player = 2 Then
+                        For i As Integer = 0 To 7
+                            If Form1.b_pawn(i).ret_x = x And Form1.b_pawn(i).ret_y = y Then
+                                show_possible_move(Form1.b_pawn(i).poss_mov())
+                            End If
+                        Next
+                        Return "b_pawn"
+                    End If
+                Case Else
+                    Return Nothing
+            End Select
         End If
-        Select Case board(x, y)
-            Case 1
-                Return "w_king"
-            Case 2
-                show_possible_move(Form1.w_queen.poss_mov())
-                Return "w_queen"
-            Case 3
-                For i As Integer = 0 To 1
-                    If Form1.w_bishop(i).ret_x = x And Form1.w_bishop(i).ret_y = y Then
-                        show_possible_move(Form1.w_bishop(i).poss_mov())
-                    End If
-                Next
-                Return "w_bishop"
-            Case 4
-                For i As Integer = 0 To 1
-                    If Form1.w_knight(i).ret_x = x And Form1.w_knight(i).ret_y = y Then
-                        show_possible_move(Form1.w_knight(i).poss_mov())
-                    End If
-                Next
-                Return "w_knight"
-            Case 5
-                For i As Integer = 0 To 1
-                    If Form1.w_rook(i).ret_x = x And Form1.w_rook(i).ret_y = y Then
-                        show_possible_move(Form1.w_rook(i).poss_mov())
-                    End If
-                Next
-                Return "w_rook"
-            Case 6
-                For i As Integer = 0 To 7
-                    If Form1.w_pawn(i).ret_x = x And Form1.w_pawn(i).ret_y = y Then
-                        show_possible_move(Form1.w_pawn(i).poss_mov())
-                    End If
-                Next
-                Return "w_pawn"
-            Case -1
-                Return "b_king"
-            Case -2
-                show_possible_move(Form1.b_queen.poss_mov())
-                Return "b_queen"
-            Case -3
-                For i As Integer = 0 To 1
-                    If Form1.b_bishop(i).ret_x = x And Form1.b_bishop(i).ret_y = y Then
-                        show_possible_move(Form1.b_bishop(i).poss_mov())
-                    End If
-                Next
-                Return "b_bishop"
-            Case -4
-                For i As Integer = 0 To 1
-                    If Form1.b_knight(i).ret_x = x And Form1.b_knight(i).ret_y = y Then
-                        show_possible_move(Form1.b_knight(i).poss_mov())
-                    End If
-                Next
-                Return "b_knight"
-            Case -5
-                For i As Integer = 0 To 1
-                    If Form1.b_rook(i).ret_x = x And Form1.b_rook(i).ret_y = y Then
-                        show_possible_move(Form1.b_rook(i).poss_mov())
-                    End If
-                Next
-               
-                Return "b_rook"
-            Case -6
-                For i As Integer = 0 To 7
-                    If Form1.b_pawn(i).ret_x = x And Form1.b_pawn(i).ret_y = y Then
-                        show_possible_move(Form1.b_pawn(i).poss_mov())
-                    End If
-                Next
-                Return "b_pawn"
-            Case Else
-                Return Nothing
-        End Select
-
     End Function
     Public Sub re_back()
         For i As Integer = 0 To 7
@@ -164,7 +236,6 @@ Public Class game
             Next
         Next
     End Sub
-
     Public Sub fill_chk_for_black()
         For i As Integer = 0 To 7
             Form1.w_pawn(i).fill_chk_king()
@@ -273,13 +344,15 @@ Public Class game
         Next
 
     End Sub
-
     Public Sub show_chk()
+        w_in_danger = False
+        b_in_danger = False
         '''''''''''''''''''''''''''''''''''''''''Black Check'''''''''''''''''''''''''''''''''''
         For i As Integer = 0 To 7
             For j As Integer = 0 To 7
                 If check_for_black(i, j) = True And Form1.b_king.x_pos = i And Form1.b_king.y_pos = j Then
                     Form1.pb(i, j).BackgroundImage = My.Resources.check
+                    b_in_danger = True
                 End If
             Next
         Next
@@ -289,11 +362,11 @@ Public Class game
             For j As Integer = 0 To 7
                 If check_for_white(i, j) = True And Form1.w_king.x_pos = i And Form1.w_king.y_pos = j Then
                     Form1.pb(i, j).BackgroundImage = My.Resources.check
+                    w_in_danger = True
                 End If
             Next
         Next
     End Sub
-    
     Public Sub show_possible_move(ByVal b As Boolean(,))
         For i As Integer = 0 To 7
             For j As Integer = 0 To 7
@@ -304,14 +377,18 @@ Public Class game
             Next
         Next
     End Sub
+
     Public Sub mov(ByVal selected, ByVal x, ByVal y, ByVal pre_x, ByVal pre_y)
         Select Case selected
             Case "w_king"
+                Form1.w_king.change_pos(x, y, pre_x, pre_y)
                 re_chk_white()
                 re_chk_black()
                 fill_chk_for_white()
                 fill_chk_for_black()
                 show_chk()
+                player = 2
+                chk_winner(selected, x, y)
             Case "w_queen"
                 Form1.w_queen.change_pos(x, y, pre_x, pre_y)
                 re_chk_white()
@@ -319,6 +396,8 @@ Public Class game
                 fill_chk_for_white()
                 fill_chk_for_black()
                 show_chk()
+                player = 2
+                chk_winner(selected, x, y)
             Case "w_bishop"
                 For i As Integer = 0 To 1
                     If Form1.w_bishop(i).ret_x = pre_x And Form1.w_bishop(i).ret_y = pre_y Then
@@ -330,6 +409,8 @@ Public Class game
                 fill_chk_for_white()
                 fill_chk_for_black()
                 show_chk()
+                player = 2
+                chk_winner(selected, x, y)
             Case "w_knight"
                 For i As Integer = 0 To 1
                     If Form1.w_knight(i).ret_x = pre_x And Form1.w_knight(i).ret_y = pre_y Then
@@ -341,6 +422,8 @@ Public Class game
                 fill_chk_for_white()
                 fill_chk_for_black()
                 show_chk()
+                player = 2
+                chk_winner(selected, x, y)
             Case "w_rook"
                 For i As Integer = 0 To 1
                     If Form1.w_rook(i).ret_x = pre_x And Form1.w_rook(i).ret_y = pre_y Then
@@ -352,6 +435,8 @@ Public Class game
                 fill_chk_for_white()
                 fill_chk_for_black()
                 show_chk()
+                player = 2
+                chk_winner(selected, x, y)
             Case "w_pawn"
                 For i As Integer = 0 To 7
                     If Form1.w_pawn(i).ret_x = pre_x And Form1.w_pawn(i).ret_y = pre_y And board(x, y) <= 0 Then
@@ -363,9 +448,18 @@ Public Class game
                 fill_chk_for_white()
                 fill_chk_for_black()
                 show_chk()
+                player = 2
+                chk_winner(selected, x, y)
 
             Case "b_king"
-
+                Form1.b_king.change_pos(x, y, pre_x, pre_y)
+                re_chk_white()
+                re_chk_black()
+                fill_chk_for_white()
+                fill_chk_for_black()
+                show_chk()
+                player = 1
+                chk_winner(selected, x, y)
             Case "b_queen"
                 Form1.b_queen.change_pos(x, y, pre_x, pre_y)
                 re_chk_white()
@@ -373,6 +467,8 @@ Public Class game
                 fill_chk_for_white()
                 fill_chk_for_black()
                 show_chk()
+                player = 1
+                chk_winner(selected, x, y)
             Case "b_bishop"
                 For i As Integer = 0 To 1
                     If Form1.b_bishop(i).ret_x = pre_x And Form1.b_bishop(i).ret_y = pre_y Then
@@ -384,6 +480,8 @@ Public Class game
                 fill_chk_for_white()
                 fill_chk_for_black()
                 show_chk()
+                player = 1
+                chk_winner(selected, x, y)
             Case "b_knight"
                 For i As Integer = 0 To 1
                     If Form1.b_knight(i).ret_x = pre_x And Form1.b_knight(i).ret_y = pre_y Then
@@ -395,6 +493,8 @@ Public Class game
                 fill_chk_for_white()
                 fill_chk_for_black()
                 show_chk()
+                player = 1
+                chk_winner(selected, x, y)
             Case "b_rook"
                 For i As Integer = 0 To 1
                     If Form1.b_rook(i).ret_x = pre_x And Form1.b_rook(i).ret_y = pre_y Then
@@ -406,6 +506,8 @@ Public Class game
                 fill_chk_for_white()
                 fill_chk_for_black()
                 show_chk()
+                player = 1
+                chk_winner(selected, x, y)
             Case "b_pawn"
                 For i As Integer = 0 To 7
                     If Form1.b_pawn(i).ret_x = pre_x And Form1.b_pawn(i).ret_y = pre_y And board(x, y) >= 0 Then
@@ -417,6 +519,8 @@ Public Class game
                 fill_chk_for_white()
                 fill_chk_for_black()
                 show_chk()
+                player = 1
+                chk_winner(selected, x, y)
             Case Else
 
         End Select

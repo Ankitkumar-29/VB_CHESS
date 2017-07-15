@@ -33,8 +33,8 @@
         ga.re_can_move()
         ga.show()
         ga.re_back()
-
-
+        ga.fill_chk_for_black()
+        ga.fill_chk_for_white()
 
     End Sub
 
