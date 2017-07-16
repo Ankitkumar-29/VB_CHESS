@@ -1,6 +1,4 @@
-﻿Imports Chess.Form1
-
-Public Class game
+﻿Public Class game
     Public board(7, 7) As Integer
     Public can_move(7, 7) As Boolean
     Public check_for_white(7, 7) As Boolean
@@ -10,6 +8,7 @@ Public Class game
     Public b_in_danger As Boolean = False
     Public w_in_danger As Boolean = False
     Public Sub New()
+        ''Array for chess_board +ve are for White_pieces -ve are for Black_pieces and 0 are for blank_boxes
         board = {{5, 4, 3, 2, 1, 3, 4, 5},
                  {6, 6, 6, 6, 6, 6, 6, 6},
                  {0, 0, 0, 0, 0, 0, 0, 0},
@@ -17,12 +16,15 @@ Public Class game
                  {0, 0, 0, 0, 0, 0, 0, 0},
                  {0, 0, 0, 0, 0, 0, 0, 0},
                  {-6, -6, -6, -6, -6, -6, -6, -6},
-                 {-5, -4, -3, -2, -1, -3, -4, -5}}
+                 {-5, -4, -3, -2, -1, -3, -4, -5}}     ''
+
+
         re_chk_black()
         re_chk_white()
 
-   
+
     End Sub
+
     Public Sub chk_winner(ByVal selected, ByVal x, ByVal y)
         show()
         'If b_in_danger = True Then
@@ -208,6 +210,7 @@ Public Class game
             End Select
         End If
     End Function
+
     Public Sub re_back()
         For i As Integer = 0 To 7
             For j As Integer = 0 To 7
@@ -215,6 +218,7 @@ Public Class game
             Next
         Next
     End Sub
+
     Public Sub re_can_move()
         For i As Integer = 0 To 7
             For j As Integer = 0 To 7
@@ -222,6 +226,7 @@ Public Class game
             Next
         Next
     End Sub
+
     Public Sub re_chk_white()
         For i As Integer = 0 To 7
             For j As Integer = 0 To 7
@@ -229,6 +234,7 @@ Public Class game
             Next
         Next
     End Sub
+
     Public Sub re_chk_black()
         For i As Integer = 0 To 7
             For j As Integer = 0 To 7
@@ -236,6 +242,7 @@ Public Class game
             Next
         Next
     End Sub
+
     Public Sub fill_chk_for_black()
         For i As Integer = 0 To 7
             Form1.w_pawn(i).fill_chk_king()
@@ -290,6 +297,7 @@ Public Class game
         Next
 
     End Sub
+
     Public Sub fill_chk_for_white()
         For i As Integer = 0 To 7
             Form1.b_pawn(i).fill_chk_king()
@@ -344,6 +352,7 @@ Public Class game
         Next
 
     End Sub
+
     Public Sub show_chk()
         w_in_danger = False
         b_in_danger = False
@@ -367,6 +376,7 @@ Public Class game
             Next
         Next
     End Sub
+
     Public Sub show_possible_move(ByVal b As Boolean(,))
         For i As Integer = 0 To 7
             For j As Integer = 0 To 7
@@ -527,4 +537,5 @@ Public Class game
 
 
     End Sub
+
 End Class
