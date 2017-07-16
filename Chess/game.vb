@@ -244,6 +244,7 @@
     End Sub
 
     Public Sub fill_chk_for_black()
+        re_chk_black()
         For i As Integer = 0 To 7
             Form1.w_pawn(i).fill_chk_king()
             For j As Integer = 0 To 7
@@ -299,6 +300,7 @@
     End Sub
 
     Public Sub fill_chk_for_white()
+        re_chk_white()
         For i As Integer = 0 To 7
             Form1.b_pawn(i).fill_chk_king()
             For j As Integer = 0 To 7
@@ -365,7 +367,7 @@
                 End If
             Next
         Next
-
+   
         '''''''''''''''''''''''''''''''''''''''''White Check'''''''''''''''''''''''''''''''''''
         For i As Integer = 0 To 7
             For j As Integer = 0 To 7
